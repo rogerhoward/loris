@@ -16,15 +16,17 @@ addons:
 
 language: python
 
-python:
- - "2.7"
+matrix:
+  include:
+    - python: 2.7
+      env: TOXENV=2.7
 
 install:
- - pip install -r requirements_test.txt
+  - pip install --upgrade pip setuptools
+  - pip install --upgrade tox
 
 script:
-  - "coverage run --module py.test --verbose tests/*.py"
-  - "coverage report"
+  - tox
 
 notifications:
   email:
