@@ -21,6 +21,14 @@ matrix:
     - python: 2.7
       env: TOXENV=2.7
 
+  allow_failures:
+    - python: 3.4
+      env: TOXENV=3.4
+    - python: 3.5
+      env: TOXENV=3.5
+    - python: 3.6
+      env: TOXENV=3.6
+
 install:
   - pip install --upgrade pip setuptools
   - pip install --upgrade tox
