@@ -20,7 +20,7 @@ from loris import img_info, loris_exception
 from loris.constants import PROTOCOL
 from loris.img_info import ImageInfo
 from loris.loris_exception import ImageInfoException
-from tests import loris_t, webapp_t
+from tests import loris_t, test_webapp as webapp_t
 
 
 """
