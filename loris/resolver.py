@@ -9,6 +9,7 @@ from __future__ import absolute_import
 from logging import getLogger
 from os.path import join, exists, dirname, split
 from os import remove
+import os
 from shutil import copy
 import tempfile
 from contextlib import closing
@@ -189,31 +190,31 @@ class SimpleHTTPResolver(_AbstractResolver):
     def __init__(self, config):
         super(SimpleHTTPResolver, self).__init__(config)
 
-        self.source_prefix = self.config.get('source_prefix', '')
+        self.source_prefix = os.environ.get('LORIS_SOURCE_PREFIX', self.config.get('source_prefix', ''))
 
-        self.source_suffix = self.config.get('source_suffix', '')
+        self.source_suffix = os.environ.get('LORIS_SOURCE_SUFFIX', self.config.get('source_suffix', ''))
 
-        self.default_format = self.config.get('default_format', None)
+        self.default_format = os.environ.get('LORIS_DEFAULT_FORMAT', self.config.get('default_format', None))
 
-        self.head_resolvable = self.config.get('head_resolvable', False)
+        self.head_resolvable = os.environ.get('LORIS_HEAD_RESOLVABLE', self.config.get('head_resolvable', False))
 
-        self.uri_resolvable = self.config.get('uri_resolvable', False)
+        self.uri_resolvable = os.environ.get('LORIS_URI_RESOLVABLE', self.config.get('uri_resolvable', False))
 
-        self.user = self.config.get('user', None)
+        self.user = os.environ.get('LORIS_USER', self.config.get('user', None))
 
-        self.pw = self.config.get('pw', None)
+        self.pw = os.environ.get('LORIS_PW', self.config.get('pw', None))
 
-        self.cert = self.config.get('cert', None)
+        self.cert = os.environ.get('LORIS_CERT', self.config.get('cert', None))
 
-        self.key = self.config.get('key', None)
+        self.key = os.environ.get('LORIS_KEY', self.config.get('key', None))
 
-        self.ssl_check = self.config.get('ssl_check', True)
+        self.ssl_check = os.environ.get('LORIS_SSL_CHECK', self.config.get('ssl_check', True))
 
-        self.ident_regex = self.config.get('ident_regex', False)
+        self.ident_regex = os.environ.get('LORIS_IDENT_REGEX', self.config.get('ident_regex', False))
 
-        if 'cache_root' in self.config:
-            self.cache_root = self.config['cache_root']
-        else:
+        self.cache_root = os.environ.get('LORIS_CACHE_ROOT', self.config.get('cache_root', None)
+
+        if self.cache_root is None:
             message = 'Server Side Error: Configuration incomplete and cannot resolve. Missing setting for cache_root.'
             logger.error(message)
             raise ResolverException(message)
